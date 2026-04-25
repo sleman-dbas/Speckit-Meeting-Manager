@@ -5,6 +5,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { MeetingsService } from './meetings.service';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { UpdateMeetingDto } from './dto/update-meeting.dto';
+import { MeetingMinutesDto } from './dto/meeting-minutes.dto';
 
 @Controller('api/meetings')
 @UseGuards(AuthGuard, RolesGuard)
@@ -27,6 +28,17 @@ export class MeetingsController {
   ) {
     const userId = request.user?.id ?? 'unknown';
     return this.meetingsService.updateMeeting(id, updateMeetingDto, userId);
+  }
+
+  @Post(':id/minutes')
+  @Roles('Admin', 'Organizer')
+  async saveMeetingMinutes(
+    @Req() request: any,
+    @Param('id') id: string,
+    @Body() meetingMinutesDto: MeetingMinutesDto,
+  ) {
+    const userId = request.user?.id ?? 'unknown';
+    return this.meetingsService.saveMeetingMinutes(id, meetingMinutesDto, userId);
   }
 
   @Get()

@@ -5,6 +5,7 @@ import { AuditService } from '../audit/audit.service';
 import { Meeting } from './entities/meeting.entity';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { UpdateMeetingDto } from './dto/update-meeting.dto';
+import { MeetingMinutesDto } from './dto/meeting-minutes.dto';
 
 @Injectable()
 export class MeetingsService {
@@ -32,6 +33,17 @@ export class MeetingsService {
     Object.assign(meeting, payload);
     const updated = await this.meetingsRepository.save(meeting);
     await this.auditService.logAction(userId, 'UpdateMeeting', 'Meeting', updated.id, { changes: payload });
+    return updated;
+  }
+
+  async saveMeetingMinutes(id: string, payload: MeetingMinutesDto, userId: string): Promise<Meeting> {
+    const meeting = await this.meetingsRepository.findOne({ where: { id } });
+    if (!meeting) {
+      throw new NotFoundException('Meeting not found');
+    }
+    Object.assign(meeting, payload);
+    const updated = await this.meetingsRepository.save(meeting);
+    await this.auditService.logAction(userId, 'SaveMeetingMinutes', 'Meeting', updated.id, { minutes: payload.minutes });
     return updated;
   }
 
