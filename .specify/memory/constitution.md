@@ -11,7 +11,7 @@ Follow-up TODOs: None
 ## Core Principles
 
 ### I. Code Quality
-All code must maintain high quality standards. Python functions and classes must be fully typed with type hints and include Google-style docstrings. The coding process must be robust, with mandatory double-checking for errors and security issues before commits.
+All code must maintain high quality standards. All functions and classes must be fully typed, documented with clear docstrings or comments, and reviewed for correctness and security before commits.
 
 ### II. Testing Standards
 Comprehensive testing is required for all features. This includes unit tests, integration tests, and performance tests. Test coverage must meet minimum thresholds, and tests must be written before or alongside code implementation.
